@@ -17,3 +17,6 @@ spec:
         image: ahmedlebshten/school_management_system:5
         ports:
         - containerPort: 80
+        envFrom:
+        - secretRef:
+            name: school-env
