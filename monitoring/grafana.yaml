@@ -1,0 +1,88 @@
+# Grafana Configuration
+
+# Admin credentials
+adminUser: admin
+adminPassword: admin123
+
+# Service configuration
+service:
+  type: ClusterIP
+  port: 80
+
+# Persistence (disabled StorageClass)
+persistence:
+  enabled: false
+
+# Datasources configuration
+datasources:
+  datasources.yaml:
+    apiVersion: 1
+    datasources:
+      # Prometheus datasource
+      - name: Prometheus
+        type: prometheus
+        url: http://prometheus-kube-prometheus-prometheus.monitoring.svc.cluster.local:7070
+        access: proxy
+        isDefault: true
+        editable: true
+
+      # Loki datasource
+      - name: Loki
+        type: loki
+        url: http://loki.monitoring.svc.cluster.local:3100
+        access: proxy
+        editable: true
+
+# Dashboard providers
+dashboardProviders:
+  dashboardproviders.yaml:
+    apiVersion: 1
+    providers:
+      - name: 'default'
+        orgId: 1
+        folder: ''
+        type: file
+        disableDeletion: false
+        editable: true
+        options:
+          path: /var/lib/grafana/dashboards/default
+
+# Pre-installed dashboards
+dashboards:
+  default:
+    # Kubernetes cluster monitoring
+    kubernetes-cluster:
+      gnetId: 7249
+      revision: 1
+      datasource: Prometheus
+
+    # Node exporter
+    node-exporter:
+      gnetId: 1860
+      revision: 27
+      datasource: Prometheus
+
+    # Loki dashboard
+    loki-dashboard:
+      gnetId: 13639
+      revision: 2
+      datasource: Loki
+
+# Resources
+resources:
+  requests:
+    cpu: 100m
+    memory: 128Mi
+  limits:
+    cpu: 500m
+    memory: 512Mi
+
+# Plugins
+plugins:
+  - grafana-piechart-panel
+  - grafana-clock-panel
+
+# Environment variables
+env:
+  GF_SECURITY_ALLOW_EMBEDDING: "true"
+  GF_AUTH_ANONYMOUS_ENABLED: "false"
