@@ -2,21 +2,28 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: school-management-system
+  labels:
+    app: school-management-system
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: school_management_system
+      app: school-management-system
   template:
     metadata:
       labels:
-        app: school_management_system
+        app: school-management-system
     spec:
       containers:
       - name: school-management-system
         image: ahmedlebshten/school_management_system:5
         ports:
         - containerPort: 80
-        envFrom:
-        - secretRef:
+        volumeMounts:
+          - name: env-file
+            mountPath: /var/www/html/.env
+            subPath: .env
+      volumes:
+        - name: env-file
+          configMap:
             name: school-env
