@@ -15,10 +15,17 @@ spec:
       containers:
       - name: mysql
         image: mysql:5.7
-        ports:
-          - containerPort: 3306
         env:
-          - name: MYSQL_ROOT_PASSWORD
-            value: root
-          - name: MYSQL_DATABASE
-            value: school
+        - name: MYSQL_ROOT_PASSWORD
+          value: root
+        - name: MYSQL_DATABASE
+          value: school
+        ports:
+        - containerPort: 3306
+        volumeMounts:
+        - name: mysql-init
+          mountPath: /docker-entrypoint-initdb.d
+      volumes:
+      - name: mysql-init
+        configMap:
+          name: mysql-init

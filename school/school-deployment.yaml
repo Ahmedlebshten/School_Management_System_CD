@@ -14,14 +14,9 @@ spec:
     spec:
       containers:
       - name: school-management-system
-        image: ahmedlebshten/school_management_system:6
+        image: ahmedlebshten/school_management_system:7
         ports:
-          - containerPort: 80
-        volumeMounts:
-          - name: env-file
-            mountPath: /var/www/html/.env
-            subPath: .env
-      volumes:
-        - name: env-file
-          configMap:
+        - containerPort: 80
+        envFrom:
+        - configMapRef:
             name: school-env
