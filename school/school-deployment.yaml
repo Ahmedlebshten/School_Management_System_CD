@@ -14,7 +14,7 @@ spec:
     spec:
       containers:
       - name: school-management-system
-        image: ahmedlebshten/school_management_system:6
+        image: ahmedlebshten/school_management_system:7
         ports:
           - containerPort: 80
         volumeMounts:
