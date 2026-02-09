@@ -8,4 +8,4 @@ spec:
     app: school_management_system
   ports:
   - port: 80
-    targetPort: 2020
+    targetPort: 80

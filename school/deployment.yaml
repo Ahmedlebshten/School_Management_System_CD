@@ -16,4 +16,4 @@ spec:
       - name: school-management-system
         image: ahmedlebshten/school_management_system:4
         ports:
-        - containerPort: 2020
+        - containerPort: 80
