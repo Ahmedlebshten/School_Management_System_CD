@@ -14,7 +14,7 @@ spec:
     spec:
       containers:
       - name: school-management-system
-        image: ahmedlebshten/school_management_system:19
+        image: ahmedlebshten/school_management_system:20
         ports:
         - containerPort: 80
         envFrom:
