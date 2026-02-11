@@ -9,7 +9,7 @@ spec:
   source:
     repoURL: https://github.com/Ahmedlebshten/School_Management_System_CD.git
     targetRevision: master
-    path: monitoring/prometheus
+    path: monitoring
 
   destination:
     server: https://kubernetes.default.svc
