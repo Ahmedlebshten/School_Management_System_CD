@@ -2,7 +2,15 @@
 
 ## Overview
 
-A comprehensive Kubernetes-native CI/CD and monitoring solution for the School Management System deployed on Amazon EKS using ArgoCD for GitOps-based deployment and includes full monitoring stack with Prometheus, Grafana, and Loki.
+This repository represents the GitOps (CD) layer of the School Management System project.
+
+It contains all Kubernetes manifests and Helm values used by ArgoCD to automatically deploy:
+
+- School Application
+- MySQL Database
+- Monitoring Stack (Prometheus, Grafana, Loki, Promtail)
+
+Deployed on Amazon EKS using a GitOps workflow.
 
 ---
 
@@ -31,21 +39,23 @@ A comprehensive Kubernetes-native CI/CD and monitoring solution for the School M
 
 ```
 School_Management_System_CD/
+│
 ├── applications/
-│   ├── school-app.yaml               # School Management System ArgoCD App
-│   ├── prometheus-app.yaml           # Prometheus ArgoCD App
-│   ├── grafana-app.yaml              # Grafana ArgoCD App
-│   └── loki-app.yaml                 # Loki ArgoCD App
+│   ├── school-app.yaml          # ArgoCD App for school
+│   └── monitoring-app.yaml      # ArgoCD App for monitoring stack
 │
 ├── school/
-│   ├── deployment.yaml               # Kubernetes Deployment manifest
-│   └── service.yaml                  # Kubernetes Service manifest
+│   ├── mysql-deployment.yaml
+│   ├── mysql-service.yaml
+│   ├── mysql-init.yaml
+│   ├── school-deployment.yaml
+│   ├── school-service.yaml
+│   └── school-env.yaml
 │
-└── monitoring/
-    ├── prometheus.yaml               # Prometheus configuration
-    ├── grafana.yaml                  # Grafana configuration
-    ├── loki.yaml                     # Loki log aggregation config
-    └── promtail.yaml                 # Promtail log shipper config
+├── monitoring/
+│   └── values.yaml              # Helm values for monitoring stack
+│
+└── README.md
 ```
 
 ---
@@ -54,25 +64,24 @@ School_Management_System_CD/
 
 ### 1. School Management System
 - **Namespace:** school
-- **Container Image:** ahmedlebshten/school_management_system:4
-- **Port:** 2020
+- **Container Image:** ahmedlebshten/school_management_system:image-tag
+- **Service Type:** ClusterIP
 - **Replicas:** 1
 
-### 2. Prometheus
-- **Namespace:** monitoring
-- **Retention:** 30 days
-- **Resources:** 1 CPU / 2GB RAM (min), 2 CPU / 4GB RAM (max)
-- **Service Type:** ClusterIP (Port 9090)
+### 2.MySQL Database 
+- **Namespace:** school 
+- **Service Type:** ClusterIP 
+- Internal only (not exposed externally) 
+- Currently without PVC (ephemeral storage)
 
-### 3. Grafana
+### 3.Monitoring Stack (Helm-Based) 
+Installed using Helm values: 
 - **Namespace:** monitoring
-- **Data Source:** Prometheus
-- **Purpose:** Visualization and dashboards
-
-### 4. Loki
-- **Namespace:** monitoring
-- **Purpose:** Centralized log aggregation
-- **Log Shipper:** Promtail
+- **Service Types:** ClusterIP 
+- Prometheus 
+- Grafana 
+- Loki 
+- Promtail  
 
 ---
 
@@ -98,8 +107,7 @@ kubectl get svc -n school
 kubectl get svc -n monitoring
 
 # Port forwarding (example)
-kubectl port-forward -n monitoring svc/prometheus 9090:9090
-kubectl port-forward -n monitoring svc/grafana 3000:3000
+kubectl -n argocd port-forward svc/argocd-server 9090:443
 ```
 
 ---
