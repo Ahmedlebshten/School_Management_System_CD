@@ -15,7 +15,7 @@ spec:
       containers:
       - name: mysql
         image: mysql:5.7
-        env:
+        env:       # For production use, move these environment variables to ConfigMap (non-sensitive) and Secret (sensitive data like passwords)
         - name: MYSQL_ROOT_PASSWORD
           value: root
         - name: MYSQL_DATABASE
@@ -27,5 +27,5 @@ spec:
           mountPath: /docker-entrypoint-initdb.d
       volumes:
       - name: mysql-init
-        configMap:
+        configMap:      # Initialization SQL mounted here will run only if /var/lib/mysql is empty, i.e., when the container starts for the first time.
           name: mysql-init
