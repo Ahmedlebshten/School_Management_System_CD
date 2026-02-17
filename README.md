@@ -2,9 +2,9 @@
 
 ## Overview
 
-This repository represents the GitOps (CD) layer of the School Management System.
+## This repository represents the GitOps (CD) layer of the School Management System.
 
-It contains all Kubernetes manifests and Helm values used by ArgoCD to automatically deploy:
+## It contains all Kubernetes manifests and Helm values used by ArgoCD to automatically deploy:
 	•	School Web Application
 	•	MySQL Database (with PVC)
 	•	Monitoring Stack (Prometheus, Grafana, Loki, Promtail)
