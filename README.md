@@ -67,6 +67,7 @@ School_Management_System_CD/
 ⸻
 
 2️⃣ MySQL Database
+
 	•	Namespace: school
 	•	Service Type: ClusterIP (internal only)
 	•	Uses:
@@ -78,6 +79,7 @@ School_Management_System_CD/
 ⸻
 
 3️⃣ Monitoring Stack (Helm-Based)
+
 	•	Namespace: monitoring
 	•	Installed via Helm (values.yaml)
 	•	Components:
