@@ -29,7 +29,6 @@ Deployed on Amazon EKS using a GitOps workflow.
 ⸻ 
 
 ## Repository Structure
-
 School_Management_System_CD/
 │
 ├── applications/
