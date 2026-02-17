@@ -55,19 +55,13 @@ School_Management_System_CD/
 1️⃣ School Web Application
 
 	•	Namespace: school
-
 	•	Image: ahmedlebshten/school_management_system:24
-
 	•	Service Type: LoadBalancer
-
 	•	Uses:
 	•	ConfigMap (non-sensitive DB config)
-
 	•	Secret (DB credentials)
-
 	•	Includes:
 	•	Liveness & Readiness Probes
-   
 	•	Resource Requests & Limits
 
 ⸻
