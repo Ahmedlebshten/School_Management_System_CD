@@ -13,10 +13,59 @@ spec:
         app: school-management-system
     spec:
       containers:
-      - name: school-management-system
-        image: ahmedlebshten/school_management_system:24
-        ports:
-        - containerPort: 80
-        envFrom:
-        - configMapRef:
-            name: school-env
+        - name: school-management-system
+          image: ahmedlebshten/school_management_system:24
+
+          ports:
+            - containerPort: 80
+
+# connection between the school wep app and mysql database 
+          env:
+            - name: DB_HOST
+              valueFrom:
+                configMapKeyRef:
+                  name: mysql-config
+                  key: MYSQL_HOST
+
+            - name: DB_NAME
+              valueFrom:
+                configMapKeyRef:
+                  name: mysql-config
+                  key: MYSQL_DATABASE
+
+            - name: DB_USER
+              valueFrom:
+                secretKeyRef:
+                  name: mysql-secret
+                  key: MYSQL_USER
+
+            - name: DB_PASS
+              valueFrom:
+                secretKeyRef:
+                  name: mysql-secret
+                  key: MYSQL_ROOT_PASSWORD
+
+            - name: DB_PORT
+              value: "3306"
+
+          resources:
+            requests:
+              cpu: "200m"
+              memory: "256Mi"
+            limits:
+              cpu: "500m"
+              memory: "512Mi"
+
+          livenessProbe:
+            httpGet:
+              path: /
+              port: 80
+            initialDelaySeconds: 10
+            periodSeconds: 10
+
+          readinessProbe:
+            httpGet:
+              path: /
+              port: 80
+            initialDelaySeconds: 5
+            periodSeconds: 5

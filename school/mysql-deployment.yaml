@@ -13,19 +13,61 @@ spec:
         app: mysql
     spec:
       containers:
-      - name: mysql
-        image: mysql:5.7
-        env:       # For production use, move these environment variables to ConfigMap (non-sensitive) and Secret (sensitive data like passwords)
-        - name: MYSQL_ROOT_PASSWORD
-          value: root
-        - name: MYSQL_DATABASE
-          value: school
-        ports:
-        - containerPort: 3306
-        volumeMounts:
-        - name: mysql-init
-          mountPath: /docker-entrypoint-initdb.d
+        - name: mysql
+          image: mysql:5.7
+
+# MySQL initialization variables (used at container startup to create DB contanier and credentials)
+          env:
+            - name: MYSQL_DATABASE
+              valueFrom:
+                configMapKeyRef:
+                  name: mysql-config
+                  key: MYSQL_DATABASE
+
+            - name: MYSQL_ROOT_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: mysql-secret
+                  key: MYSQL_ROOT_PASSWORD
+
+            - name: MYSQL_USER
+              valueFrom:
+                secretKeyRef:
+                  name: mysql-secret
+                  key: MYSQL_USER
+
+          ports:
+            - containerPort: 3306
+
+          resources:
+            requests:
+              cpu: "250m"
+              memory: "512Mi"
+            limits:
+              cpu: "500m"
+              memory: "1Gi"
+
+          readinessProbe:
+            tcpSocket:
+              port: 3306
+            initialDelaySeconds: 10
+            periodSeconds: 10
+            timeoutSeconds: 5
+            failureThreshold: 3
+
+# # Persistent storage for MySQL data.
+          volumeMounts:
+            - name: mysql-storage
+              mountPath: /var/lib/mysql
+
+            - name: mysql-init
+              mountPath: /docker-entrypoint-initdb.d
+
       volumes:
-      - name: mysql-init
-        configMap:      # Initialization SQL mounted here will run only if /var/lib/mysql is empty, i.e., when the container starts for the first time.
-          name: mysql-init
+        - name: mysql-init
+          configMap:
+            name: mysql-init
+
+        - name: mysql-storage
+          persistentVolumeClaim:
+            claimName: mysql-pvc

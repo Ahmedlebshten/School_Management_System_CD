@@ -3,7 +3,7 @@ kind: Service
 metadata:
   name: school-management-system-svc
 spec:
-  type: ClusterIP
+  type: LoadBalancer
   selector:
     app: school-management-system
   ports:
