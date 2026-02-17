@@ -29,6 +29,7 @@ Deployed on Amazon EKS using a GitOps workflow.
 ⸻ 
 
 ## Repository Structure
+
 School_Management_System_CD/
 │
 ├── applications/
@@ -49,6 +50,8 @@ School_Management_System_CD/
 │   └── values.yaml   # Helm values for monitoring stack
 │
 └── README.md
+
+⸻
 
 ## Applications Deployed
 
