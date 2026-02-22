@@ -1,6 +1,7 @@
 apiVersion: v1
 kind: ConfigMap
 metadata:
+  namespace: school
   name: mysql-init
 data:
   init.sql: |

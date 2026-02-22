@@ -1,6 +1,7 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
+  namespace: school
   name: school-management-system
 spec:
   replicas: 1

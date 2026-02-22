@@ -1,8 +1,8 @@
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: school-app
   namespace: argocd
+  name: school-app
 spec:
   project: default
 
