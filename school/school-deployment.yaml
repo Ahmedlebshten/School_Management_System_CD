@@ -13,6 +13,20 @@ spec:
       labels:
         app: school-management-system
     spec:
+
+# waiting for mysql container is ready
+      initContainers:
+        - name: wait-for-mysql
+          image: busybox:1.36
+          command:
+            - sh
+            - -c
+            - |
+              until nc -z mysql 3306; do
+                echo "Waiting for MySQL..."
+                sleep 3
+              done
+      
       containers:
         - name: school-management-system
           image: ahmedlebshten/school_management_system:24
