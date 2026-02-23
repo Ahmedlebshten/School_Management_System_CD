@@ -29,8 +29,7 @@ spec:
       
       containers:
         - name: school-management-system
-          image: ahmedlebshten/school_management_system:24
-
+        - image: 731628759499.dkr.ecr.us-east-1.amazonaws.com/school-management-system:24
           ports:
             - containerPort: 80
 
