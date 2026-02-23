@@ -47,7 +47,7 @@ No manual kubectl apply required.
 ____
 
 ## Repository Structure
-
+```
 School_Management_System_CD/
 │
 ├── applications/
@@ -72,7 +72,7 @@ School_Management_System_CD/
 │   └── values.yaml
 │
 └── README.md
-
+```
 ____
 
 ## Application Deployment
