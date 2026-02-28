@@ -13,9 +13,10 @@ ____
 ## High-Level Architecture
 
 ### CI Layer (Separate Repository)
-- Jenkins builds optimized Docker image
-- Image pushed to private AWS ECR repository
-- Image tag automatically updated in CD repository
+- GitHub Actions builds an optimized Docker image
+- Authenticates to AWS using OIDC (no static credentials)
+- Pushes image to a private Amazon ECR repository
+- Automatically updates the image tag in the CD repository
 
 ### CD Layer (This Repository)
 - ArgoCD continuously monitors this Git repository
@@ -34,13 +35,14 @@ ____
 
 ## GitOps Workflow
 
-1. Developer pushes code changes
-2. Jenkins builds new container image
-3. Image pushed to AWS ECR
-4. Image tag updated in this repository
-5. ArgoCD detects commit
-6. ArgoCD syncs cluster state
-7. EKS reconciles workloads automatically
+1. Developer pushes code changes  
+2. GitHub Actions workflow is triggered  
+3. A new container image is built  
+4. Image is pushed to Amazon ECR  
+5. Image tag is updated in the CD repository  
+6. ArgoCD detects the new commit  
+7. ArgoCD syncs the cluster state  
+8. EKS reconciles workloads automatically
 
 No manual kubectl apply required.
 
@@ -159,7 +161,6 @@ ____
 - Amazon EKS
 - AWS ECR
 - ArgoCD
-- Jenkins
 - Helm
 - Docker
 - Prometheus
