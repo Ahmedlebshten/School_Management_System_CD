@@ -1,4 +1,4 @@
-﻿# School Management System – Enterprise-Grade GitOps Deployment on Amazon EKS
+﻿# School Management System – CD Repository with GitOps  
 
 ## Executive Summary
 
