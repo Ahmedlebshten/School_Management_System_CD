@@ -1,4 +1,4 @@
-﻿# School Management System – CD Repository with GitOps  
+﻿# School Management System – CD (GitOps with ArgoCD)
 
 ## Executive Summary
 
